@@ -12,7 +12,9 @@
 %April 3, 2014.  There's a problem with the "noise" term in FS cell.  When
 %  the noise is just above 0, the FS cell gets fat spikes.  
 
-function [rs_V,t,ic,current,synaptic] = simple_rs_2d(T,L,EK,ic,  rs0,syn0,C0,positionRC)
+function [rs_V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,positionRC)
+
+  EK = -80;
 
   dt = 0.005;
   
