@@ -4,7 +4,8 @@ clear
 close all
 
 %L=2704; LL=52;
-L=729; LL=27;           %L is the total # of neurons.
+%L=729; LL=27;           %L is the total # of neurons.
+L=144; LL=12;
                         %LL is the size of a side of the 2-dim grid.
                         %... with LL=27, and L=27^2=729, we'll eventually
                         %create a 25-by-25 grid, and drop the outer
@@ -19,9 +20,10 @@ rs0.gKDR = 300;
 rs0.gNaP = 0;
 rs0.gKM  = 0;
 rs0.gKNa = 0;
-rs0.sigma = 3;
+rs0.sigma = 2;
 rs0.I0 = 1.5+zeros(1,L);    %No drive to other cells...
-rs0.I0(57) = -5;        %... excite one cell at upper left corner of grid.
+%rs0.I0(57) = -5;        %... excite one cell at upper left corner of grid.
+rs0.I0(107) = -5;
 
 syn0.taudEE=1.0;       %Synapse parameters.
 syn0.taurEE=0.5;
@@ -63,7 +65,7 @@ set(gca,'LooseInset',get(gca,'TightInset'))
 % and plot it ...
 counter=1;
 for i=1:1000:T
-    subplot(2,5,counter); counter=counter+1;
+    subplot(4,5,counter); counter=counter+1;
     map = reshape(squeeze(V(i,:)), [LL,LL]);
     map = map(2:LL-1, 2:LL-1);
     imagesc(map, [-80, 40])
@@ -77,7 +79,31 @@ LFP = approximate_LFP(LL,synaptic,group_size);
 [V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,RCposition);
 % and plot it ...
 for i=1:1000:T
-    subplot(2,5,counter); counter=counter+1;
+    subplot(4,5,counter); counter=counter+1;
+    map = reshape(squeeze(V(i,:)), [LL,LL]);
+    map = map(2:LL-1, 2:LL-1);
+    imagesc(map, [-80, 40])
+    title(num2str(tend+t(i),2))
+end
+LFP =cat(1,LFP,approximate_LFP(LL,synaptic,group_size));
+
+% continue the run ...
+[V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,RCposition);
+% and plot it ...
+for i=1:1000:T
+    subplot(4,5,counter); counter=counter+1;
+    map = reshape(squeeze(V(i,:)), [LL,LL]);
+    map = map(2:LL-1, 2:LL-1);
+    imagesc(map, [-80, 40])
+    title(num2str(tend+t(i),2))
+end
+LFP =cat(1,LFP,approximate_LFP(LL,synaptic,group_size));
+
+% continue the run ...
+[V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,RCposition);
+% and plot it ...
+for i=1:1000:T
+    subplot(4,5,counter); counter=counter+1;
     map = reshape(squeeze(V(i,:)), [LL,LL]);
     map = map(2:LL-1, 2:LL-1);
     imagesc(map, [-80, 40])
@@ -87,7 +113,7 @@ LFP =cat(1,LFP,approximate_LFP(LL,synaptic,group_size));
 
 figure
 dt = t(2)-t(1);
-plot(LFP)
+plot((LFP)
 xlabel('Indices')
 ylabel('LFP')
 title('Neighbor-to-neighbor connectivity')
