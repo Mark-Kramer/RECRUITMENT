@@ -1,0 +1,79 @@
+%NOTES.
+%  From [Cunningham PNAS 2004 SI].
+%  x.  No persistent Na
+%  x.  No h-current
+%  x.  Updated fast Na activation (done)
+%  x.  Updated fast Na inactivation (done)
+%  x.  Updated KDR (done)
+%
+%April 3, 2014.  Fixed Cunningham 2004 typo in alpha_mNaF, beta_mNaF
+%  function.
+%
+%April 3, 2014.  There's a problem with the "noise" term in FS cell.  When
+%  the noise is just above 0, the FS cell gets fat spikes.  
+
+function [rs_V,t,ic,current,synaptic] = simple_CA_2d(T,L,ic, syn0,C0,positionRC)
+  
+  CA = zeros(T,L);
+ 
+  if isstruct(ic)      
+      CA(1,:) = ic.CA;
+  end
+  
+  % Prepare for no flux.
+  row1 = find(positionRC(:,1)==1);
+  row2 = find(positionRC(:,1)==2);
+  lastRow = max(positionRC(:,1));
+  rowEnd   = find(positionRC(:,1)==lastRow);
+  rowEndm1 = find(positionRC(:,1)==lastRow-1);
+  
+  col1 = find(positionRC(:,2)==1);
+  col2 = find(positionRC(:,2)==2);
+  lastCol = max(positionRC(:,2));
+  colEnd   = find(positionRC(:,2)==lastCol);
+  colEndm1 = find(positionRC(:,2)==lastCol-1);
+      
+  
+  while sum(CA < L)
+      i0 = find(CA == 0);
+      input = CA * C0.EtoE;
+      CA0 = binornd(1,input,1,L);
+      CA(i0) = CA0(i0);
+  end
+      
+   
+%       %No flux.      
+%       CA(i+1,row1) = CA(i+1,row2);      
+%       CA(i+1,row1) = CA(i+1,row2);
+%       CA(i+1,rowEnd) = CA(i+1,rowEndm1);
+%       CA(i+1,rowEnd) = sEE(i+1,rowEndm1);
+%       current(i,rowEnd) = current(i,rowEndm1);
+%       synaptic(i,rowEnd)= synaptic(i,rowEndm1);
+%       
+%       rs_V(i+1,col1) = rs_V(i+1,col2);
+%       rs_mNaF(i+1,col1) = rs_mNaF(i+1,col2);
+%       rs_hNaF(i+1,col1) = rs_hNaF(i+1,col2);
+%       rs_mNaP(i+1,col1) = rs_mNaP(i+1,col2);
+%       rs_mKDR(i+1,col1) = rs_mKDR(i+1,col2);
+%       rs_mKM(i+1,col1)  = rs_mKM(i+1,col2);
+%       rs_nKNa(i+1,col1) = rs_nKNa(i+1,col2);
+%    
+%       sEE(i+1,col1) = sEE(i+1,col2);
+%       %GEE(i+1,col1) = GEE(i+1,col2);
+%       current(i,col1) = current(i,col2);
+%       synaptic(i,col1)= synaptic(i,col2);
+%       
+%       rs_V(i+1,colEnd) = rs_V(i+1,colEndm1);
+%       rs_mNaF(i+1,colEnd) = rs_mNaF(i+1,colEndm1);
+%       rs_hNaF(i+1,colEnd) = rs_hNaF(i+1,colEndm1);
+%       rs_mNaP(i+1,colEnd) = rs_mNaP(i+1,colEndm1);
+%       rs_mKDR(i+1,colEnd) = rs_mKDR(i+1,colEndm1);
+%       rs_mKM(i+1,colEnd)  = rs_mKM(i+1,colEndm1);
+%       rs_nKNa(i+1,colEnd) = rs_nKNa(i+1,colEndm1);
+% 
+%       sEE(i+1,colEnd) = sEE(i+1,colEndm1);
+%       %GEE(i+1,colEnd) = GEE(i+1,colEndm1);
+%       current(i,colEnd) = current(i,colEndm1);
+%       synaptic(i,colEnd)= synaptic(i,colEndm1);
+      
+end    

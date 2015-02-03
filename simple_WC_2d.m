@@ -14,7 +14,7 @@
 
 function [rs_V,t,ic,current,synaptic] = simple_WC_2d(T,L,ic,  rs0,syn0,C0,positionRC)
 
-  EK = -80;
+  %EK = -80;
 
   dt = 0.005;
   

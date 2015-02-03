@@ -45,7 +45,7 @@ syn0.gee=0;             %Synapses OFF.
 
 for nsim=1:2            %Run a couple of times to initialize ...
     fprintf(['Initialize run ' num2str(nsim) '... \n'])
-    [V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,RCposition);
+    %[V,t,ic,current,synaptic] = simple_rs_2d(T,L,ic,  rs0,syn0,C0,RCposition);
 end
 fprintf('Initialization finished. \n')
 imagesc(V, [-80 20]);
