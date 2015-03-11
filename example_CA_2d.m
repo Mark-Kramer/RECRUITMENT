@@ -32,8 +32,9 @@ initial_on_index = 14;      %Turn "on" an initial cell at this index.
 t = simple_CA_2d(L,initial_on_index,C0,RCposition);
 fprintf(['Took ' num2str(max(t)) ' steps to recruit entire grid \n'])
 
-plot(t,'r')
-hold on
+% plot(t,'r')
+% hold on
+% figure
 %% Make a movie.
 
 CA = zeros(LL,LL);
@@ -47,7 +48,7 @@ for i=1:max(t)
     map = CA(2:LL-1, 2:LL-1);
     imagesc(map, [0,1])
     title(num2str(i))
-    pause(0.01)
+    pause(0.001)
     %keyboard
 end
 

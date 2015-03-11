@@ -1,17 +1,3 @@
-%NOTES.
-%  From [Cunningham PNAS 2004 SI].
-%  x.  No persistent Na
-%  x.  No h-current
-%  x.  Updated fast Na activation (done)
-%  x.  Updated fast Na inactivation (done)
-%  x.  Updated KDR (done)
-%
-%April 3, 2014.  Fixed Cunningham 2004 typo in alpha_mNaF, beta_mNaF
-%  function.
-%
-%April 3, 2014.  There's a problem with the "noise" term in FS cell.  When
-%  the noise is just above 0, the FS cell gets fat spikes.  
-
 function [t] = simple_CA_2d(L,initial_on_index,C0,positionRC)
   
   CA = zeros(1,L);
