@@ -17,6 +17,7 @@ function [t] = simple_CA_2d(L,initial_on_index,C0,positionRC)
   colEndm1 = find(positionRC(:,2)==lastCol-1);
       
   step=0;
+  t = nan(1,L);
   t(initial_on_index)=step;
   step=step+1;
   while sum(CA) < L
