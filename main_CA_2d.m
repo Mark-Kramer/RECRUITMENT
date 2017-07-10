@@ -177,6 +177,6 @@ for i = 1:nbSz
     end
 end
 CORR = corr(MAP, 'type', 'pearson', 'rows', 'pairwise');
-CORR = triulist(CORR, 1);
+CORR = CORR(triu(true(size(CORR)),1));
 
 end
